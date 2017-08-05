@@ -1,0 +1,31 @@
+{% extends "layout.html" %} {% block content %}
+<h3>{{page.title}}<small> (<a href="{{page.route}}/similar">Similar</a>)</small></h3>
+<h4>by <a href="/users/{{page.author.id}}">{{page.author.name}}</a></h4>
+<h5>Status: {{page.status}}</h5>
+<div>
+  <ul class="list-inline">
+  {% for tag in page.tags %}
+    <li><a href="/wiki/search?tag={{tag}}" class="btn btn-info btn-xs">{{tag}}</a></li>
+  {% endfor %}
+  <ul>
+</div>
+
+<hr>
+<div><a href="/users/{{page.author.id}}">{{page.author.name}}</a></div>
+<div class="page-body">
+  {% autoescape false %}{{ page.renderedContent }}{% endautoescape %}
+</div>
+<hr>
+
+
+ <div class='panel-body form-inline'>
+  <form method='POST' action='{{page.route}}?_method=PUT' class='form-group'>
+    <button class='btn btn-primary'>Edit</button>
+  </form>
+  <form method='POST' action='{{page.route}}?_method=DELETE' class='form-group'>
+    <button class='btn btn-danger'>Delete</button>
+  </form>
+</div>
+
+
+{% endblock %}
