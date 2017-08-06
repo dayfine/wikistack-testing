@@ -58,8 +58,8 @@ const Page = db.define('page', {
 
 Page.findByTag = tag => Page.findAll({ where: { tags: {$overlap: [tag]} } })
 
-Page.prototype.findSimilar = (tags, id) => {
-  return Page.findAll({ where: { tags: {$overlap: tags}, id: {$ne: id}}})
+Page.prototype.findSimilar = function() {
+  return Page.findAll({ where: { tags: {$overlap: this.tags}, id: {$ne: this.id}}})
 }
 
 Page.beforeValidate((page, options) => {

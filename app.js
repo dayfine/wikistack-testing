@@ -41,3 +41,5 @@ models.db.sync({ force: true })
     {title: 'page 3', content: 'bla [[page 2]]', tags: ['three'], authorId: 1, status: 'closed'}
   ], {validate: true, individualHooks: true}))
   .catch(console.error)
+
+module.exports = app;
