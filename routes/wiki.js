@@ -42,11 +42,21 @@ router
   })
 
   .param('urlTitle', function (req, res, next, url) {
-    req.resolveUrl = Page.findOne({
+    Page.findOne({
       where: { urlTitle: url },
       include: [{ model: User, as: 'author' }]
     })
-    next()
+    .then(function (page) {
+      if (!page) {
+        let error = new Error('bad page')
+        error.status = 404
+        return res.render('error', {error})
+      }
+
+      req.page = page
+      next()
+    })
+    .catch(next)
   })
 
   .get('/:urlTitle', function (req, res, next) {
